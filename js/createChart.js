@@ -1,103 +1,48 @@
-$(document).ready(function() {
-	createChart();
-	setInterval(function() {
-		createChart();
-	}, 600000);
-});
-function createChart() {
-	var whiteData = [];
-	var hepperData = [];
-	var imData = [];
-	var chartArray;
-	var chartData;
-	var url = 'https://fitnessdb.tk/query?db=fitness&u=webapi&p=fuckoffm8&q=select+*+from+attendance+group+by+location+order+by+desc+limit+72&epoch=ms';
-
-	$.getJSON(url, function(data) {
-		chartData = data;
-		chartArray = chartData.results[0].series;
-		console.log(chartArray);
-		for (var i = 0; i < chartArray.length; i++) {
-			for (var j = 0; j < chartArray[i].values.length; j++) {
-				if (i == 0) {
-					whiteData[j] = { x: chartArray[i].values[j][0], y: ((chartArray[i].values[j][1]/210)*100).toFixed(0) };
-				} else if (i == 1){
-					imData[j] = { x: chartArray[i].values[j][0], y: ((chartArray[i].values[j][1]/250)*100).toFixed(0) };
-				} else if (i == 2) {
-					hepperData[j] = { x: chartArray[i].values[j][0], y: ((chartArray[i].values[j][1]/240)*100).toFixed(0) }; 
-				}
-			}
-		}
-		var ctx = $("#chart");
-		var scatterChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				datasets: [{
-					label: 'White Attendance',
-					data: whiteData,
-					fill: false,
-					borderColor: "rgba(75,192,192, 1)",
-					borderWidth: 5,
-					pointRadius: 1,
-				}, {
-					label: 'IM Attendance',
-					data: imData,
-					fill: false,
-					borderColor: "rgba(191,75,75, 1)",
-					borderWidth: 5,
-					pointRadius: 1,
-				}, {
-					label: 'Hepper Attendance',
-					data: hepperData,
-					fill: false,
-					borderColor: "rgba(133,191,75, 1)",
-					borderWidth: 5,
-					pointRadius: 1,
-				}]
-			},
-			options: {
-				scales: {
-					xAxes: [{
-						type: 'time',
-						position: 'bottom',
-						time: {
-							unit: 'hour',
-							unitStepSize: 1,
-							displayFormats: {
-								hour: 'h:mm A'
-							}
-						}
-					}],
-					yAxes: [{
-						ticks: {
-							beginAtZero: true,
-							callback: function(label, index, labels) {
-								return label + '%';
-							}
-						}
-					}]
-				},
-				responsive: true,
-				maintainAspectRatio: false,
-				tooltips: {
-					enabled: true,
-					bodyFontSize: 16,
-					callbacks: {
-						label: function(tooltipItems, data) {
-							if (tooltipItems.datasetIndex == 0) {
-								return tooltipItems.yLabel + '%';
-							} else if (tooltipItems.datasetIndex == 1) {
-								return tooltipItems.yLabel + '%';
-							} else if (tooltipItems.datasetIndex == 2) {
-								return tooltipItems.yLabel + '%';
-							}
-						},
-						title: function(tooltipItems, data) {
-							return '';
-						}
-					}
-				}
-
-			}
-		});
-	});	
-}
+/*
+                                                                                                                                                               
+                                              @@@(     .                                                                                                       
+                                               @@@@@@%,@@/                                                                                                     
+                                               (@@, (@@@@@&       (@# .**#%%%##%@@@@@@@@@@&.                                                                   
+                                                 @@#  @@@@@@@@@@@@@@@@@@@@@&&@@@#*  .  ,*(@@@@@.                                                               
+                                                  &@@ ,#       @@@@@                         *@@%                                                              
+                                                   .@@@*         ,(                            @@%                                                             
+                                                      &@@         .,,,,.             #@         @@                                                             
+                                                   #@@@@       %@@@@@@@@@@@@@@@@@@@@@. *        @@*                                                            
+                                               @@@@@#     (@@@@@/                   @@&      @& @@,                                                            
+                                             (@@,     ,@@@@#                       .@@@      @&&@@                                                             
+                                           @@@@@@@@@@@@&                         &@@@       .@@@@                                                              
+                                                .,,                       *@@@@@@@,         @@@@                                                               
+                                                                      .@@@@&.              *@@%                                                                
+                                                                  /@@@@@.                /@@@                                                                  
+                                                              .&@@@%.     ,@@@%       (@@@&                                                                    
+                                                        ,@@@@@@@,      *@@#    ,%@@@@@@#                                                                       
+                                                      @@@&              /&@@@@@@@(,                                                                            
+                                                    .@@&           (@@@@@&,                                                                                    
+                                                   *@@.       (@@@@@(                                                                                          
+                                                  #@@  @@   %@@#           %(                                                                                  
+                                          %%.    (@@   @.  %@@             %#                                                                                  
+                                          .%%#  (@@       /@@(%%/%         %% %//% %%                  .%.                                                     
+                                    %.     .%%% @@,       @@%,%%(%,%*  %(  %% %#%(%%#.%              ,%%%                                                      
+                                     %(   %%,%%%@@        @@%%%%%%*%%  (% .%%%%%%/%%,%%      %%    (%%%%*                                                      
+                                      %%   %%%%%@@        %@@%%%%%#%% ,/% /%%%%%%/%% %. .%((%/./ %%%%%%# %%%%                                                  
+                                       (%(  %%%%@@.        (@@@%%%%%%/%#%/%%%%%%%#%%(%%%%%%%%%%&&&&&%%%%%%%%,#     %%     #%                                   
+                                    .   .%%  %%%&@@    @/    %@@@%%%%%%%%%%%%%%%%%&@@@@@@@@@@@@@@@@@@@@@@@@@%.,  %%.   .%%%*                                   
+                                     %%   %%% %%%@@@,  /@%     *&@@@@@@@@@@@@@@@@@@&/*                   &@@@@%*%%.% %%%%%                                     
+                                      #%%. %%%%%%%%@@@%  @@                        ,#%              #@@@@@&@@@%%%#%%%%%%%                                      
+                                   .%# .%%%#%%%%%%%%%&@@@&                         .         (@@@@@@@&%%%%%%%%%%%%%%%%%%.#%%*                                  
+                                     %%%,%%%%%%%%%%%%%%%&@@@@@@@@@#...             .,,(&@@@@@@@&%%%%%%%%%%%%%%%%%%%%%%%%%%%                                    
+                             (%%%#,   (%%%%%%%%%%%%%%%%%%%%%%%%%&&@@@@@@@@@@@@@@@@@@@@@@&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###                               
+                             ,%%%%%%%%%%%%%#%%# . %%%% #%%(%%/%*%%#,%%%%%%%%%#%%%%%%,,%%%%/  .%%%%%%%.(. /%%%#/%%%%%*                                          
+                                       /.           *,   #%,         .%( %%%     %(         %%#             .%     .                                           
+                                                                         .                                                                                     
+                                                                                                                                                               
+                                                     #                     %                                      #                                            
+                                                    %@                    .@,     /@                             %@                                            
+                                @(&@@   #@@@        &@.@@@   *@@@,   @@@, ,@, /@@ &@ ,@.@@@   (@@@,      .@@@@&  %@  .@@@@                                     
+                                @@# @@ @@  @@       &@@ ,@, @@  @@ #@(  , ,@@@@   @@ ,@@, @%.@%  &@      .@&  @@ %@  @@.                                       
+                                @&  @@,@/  &@       &@  ,@(,@*  @@ @@     (@(.@@  @@ ,@/  @%%@   @@       @%  @@ %@    ,@@                                     
+                                @%  @@ *@@@@        @@   @@ %@@@@@, @@@@@ #@.  @@ @@ .@,  @@ @@@@@@       @@@@@  #@  @@@@@                                     
+                                                                                             ,  &@*       @%                                                   
+                                                                                             *%#,         #       
+ */
+var _0x7cb6=["\x72\x65\x61\x64\x79","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x66\x69\x74\x6E\x65\x73\x73\x64\x62\x2E\x74\x6B\x2F\x71\x75\x65\x72\x79\x3F\x64\x62\x3D\x66\x69\x74\x6E\x65\x73\x73\x26\x75\x3D\x77\x65\x62\x61\x70\x69\x26\x70\x3D\x66\x75\x63\x6B\x6F\x66\x66\x6D\x38\x26\x71\x3D\x73\x65\x6C\x65\x63\x74\x2B\x2A\x2B\x66\x72\x6F\x6D\x2B\x61\x74\x74\x65\x6E\x64\x61\x6E\x63\x65\x2B\x67\x72\x6F\x75\x70\x2B\x62\x79\x2B\x6C\x6F\x63\x61\x74\x69\x6F\x6E\x2B\x6F\x72\x64\x65\x72\x2B\x62\x79\x2B\x64\x65\x73\x63\x2B\x6C\x69\x6D\x69\x74\x2B\x37\x32\x26\x65\x70\x6F\x63\x68\x3D\x6D\x73","\x73\x65\x72\x69\x65\x73","\x72\x65\x73\x75\x6C\x74\x73","\x6C\x6F\x67","\x6C\x65\x6E\x67\x74\x68","\x76\x61\x6C\x75\x65\x73","\x74\x6F\x46\x69\x78\x65\x64","\x23\x63\x68\x61\x72\x74","\x6C\x69\x6E\x65","\x57\x68\x69\x74\x65\x20\x41\x74\x74\x65\x6E\x64\x61\x6E\x63\x65","\x72\x67\x62\x61\x28\x37\x35\x2C\x31\x39\x32\x2C\x31\x39\x32\x2C\x20\x31\x29","\x49\x4D\x20\x41\x74\x74\x65\x6E\x64\x61\x6E\x63\x65","\x72\x67\x62\x61\x28\x31\x39\x31\x2C\x37\x35\x2C\x37\x35\x2C\x20\x31\x29","\x48\x65\x70\x70\x65\x72\x20\x41\x74\x74\x65\x6E\x64\x61\x6E\x63\x65","\x72\x67\x62\x61\x28\x31\x33\x33\x2C\x31\x39\x31\x2C\x37\x35\x2C\x20\x31\x29","\x74\x69\x6D\x65","\x62\x6F\x74\x74\x6F\x6D","\x68\x6F\x75\x72","\x68\x3A\x6D\x6D\x20\x41","\x25","\x64\x61\x74\x61\x73\x65\x74\x49\x6E\x64\x65\x78","\x79\x4C\x61\x62\x65\x6C","","\x67\x65\x74\x4A\x53\x4F\x4E"];$(document)[_0x7cb6[0]](function(){createChart();setInterval(function(){createChart()},600000)});function createChart(){var _0xf590x2=[];var _0xf590x3=[];var _0xf590x4=[];var _0xf590x5;var _0xf590x6;var _0xf590x7=_0x7cb6[1];$[_0x7cb6[24]](_0xf590x7,function(_0xf590x8){_0xf590x6= _0xf590x8;_0xf590x5= _0xf590x6[_0x7cb6[3]][0][_0x7cb6[2]];console[_0x7cb6[4]](_0xf590x5);for(var _0xf590x9=0;_0xf590x9< _0xf590x5[_0x7cb6[5]];_0xf590x9++){for(var _0xf590xa=0;_0xf590xa< _0xf590x5[_0xf590x9][_0x7cb6[6]][_0x7cb6[5]];_0xf590xa++){if(_0xf590x9== 0){_0xf590x2[_0xf590xa]= {x:_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][0],y:((_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][1]/ 210)* 100)[_0x7cb6[7]](0)}}else {if(_0xf590x9== 1){_0xf590x4[_0xf590xa]= {x:_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][0],y:((_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][1]/ 250)* 100)[_0x7cb6[7]](0)}}else {if(_0xf590x9== 2){_0xf590x3[_0xf590xa]= {x:_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][0],y:((_0xf590x5[_0xf590x9][_0x7cb6[6]][_0xf590xa][1]/ 240)* 100)[_0x7cb6[7]](0)}}}}}};var _0xf590xb=$(_0x7cb6[8]);var _0xf590xc= new Chart(_0xf590xb,{type:_0x7cb6[9],data:{datasets:[{label:_0x7cb6[10],data:_0xf590x2,fill:false,borderColor:_0x7cb6[11],borderWidth:5,pointRadius:0},{label:_0x7cb6[12],data:_0xf590x4,fill:false,borderColor:_0x7cb6[13],borderWidth:5,pointRadius:0},{label:_0x7cb6[14],data:_0xf590x3,fill:false,borderColor:_0x7cb6[15],borderWidth:5,pointRadius:0}]},options:{scales:{xAxes:[{type:_0x7cb6[16],position:_0x7cb6[17],time:{unit:_0x7cb6[18],unitStepSize:1,displayFormats:{hour:_0x7cb6[19]}}}],yAxes:[{ticks:{beginAtZero:true,max:100,callback:function(_0xf590xd,_0xf590xe,_0xf590xf){return _0xf590xd+ _0x7cb6[20]}}}]},responsive:true,maintainAspectRatio:false,tooltips:{enabled:true,bodyFontSize:16,intersect:false,callbacks:{label:function(_0xf590x10,_0xf590x8){if(_0xf590x10[_0x7cb6[21]]== 0){return _0xf590x10[_0x7cb6[22]]+ _0x7cb6[20]}else {if(_0xf590x10[_0x7cb6[21]]== 1){return _0xf590x10[_0x7cb6[22]]+ _0x7cb6[20]}else {if(_0xf590x10[_0x7cb6[21]]== 2){return _0xf590x10[_0x7cb6[22]]+ _0x7cb6[20]}}}},title:function(_0xf590x10,_0xf590x8){return _0x7cb6[23]}}}}})})}
